@@ -34,6 +34,7 @@ const ActionButton = ({
   verticalOrientation = "up",
   backgroundTappable = false,
   useNativeFeedback = true,
+  useNativeDriver = false,
   activeOpacity = DEFAULT_ACTIVE_OPACITY,
   fixNativeFeedbackRadius = false,
   nativeFeedbackRippleColor = "rgba(255,255,255,0.75)",
@@ -62,13 +63,13 @@ const ActionButton = ({
 
   useEffect(() => {
     if (active) {
-      Animated.spring(anim.current, { toValue: 1 }).start();
+      Animated.spring(anim.current, { toValue: 1, useNativeDriver }).start();
       setActiveState(true);
       setResetToken(resetToken);
     } else {
       props.onReset && props.onReset();
 
-      Animated.spring(anim.current, { toValue: 0 }).start();
+      Animated.spring(anim.current, { toValue: 0, useNativeDriver }).start();
       timeout.current = setTimeout(() => {
         setActiveState(false);
         setResetToken(resetToken);
@@ -216,7 +217,6 @@ const ActionButton = ({
   };
 
   const _renderActions = () => {
-
     if (!activeState) return null;
 
     let actionButtons = !Array.isArray(children) ? [children] : children;
@@ -274,7 +274,7 @@ const ActionButton = ({
     if (activeState) return reset(animate);
 
     if (animate) {
-      Animated.spring(anim.current, { toValue: 1 }).start();
+      Animated.spring(anim.current, { toValue: 1, useNativeDriver }).start();
     } else {
       anim.current.setValue(1);
     }
@@ -286,7 +286,7 @@ const ActionButton = ({
     if (props.onReset) props.onReset();
 
     if (animate) {
-      Animated.spring(anim.current, { toValue: 0 }).start();
+      Animated.spring(anim.current, { toValue: 0, useNativeDriver }).start();
     } else {
       anim.current.setValue(0);
     }
@@ -378,6 +378,7 @@ ActionButton.propTypes = {
   useNativeFeedback: PropTypes.bool,
   fixNativeFeedbackRadius: PropTypes.bool,
   nativeFeedbackRippleColor: PropTypes.string,
+  useNativeDriver: PropTypes.bool,
 
   testID: PropTypes.string,
   accessibilityLabel: PropTypes.string,
