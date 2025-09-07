@@ -240,8 +240,12 @@ const ActionButton = ({
           <ActionButtonItem
             key={idx}
             anim={anim.current}
-            {...props}
             {...ActionButton.props}
+            position={position}
+            offsetX={offsetX}
+            offsetY={offsetY}
+            verticalOrientation={verticalOrientation}
+            spacing={spacing}
             parentSize={size}
             btnColor={btnOutRange}
             onPress={() => {
